@@ -3,21 +3,18 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven("https://jitpack.io")
     }
 }
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        gradlePluginPortal()
         mavenCentral()
-        // مصدر Xposed
-        maven("https://api.xposed.info/")
-        // jcenter لم يعد مدعوم، لكن سنبقيه للاحتياط
-        jcenter()
+        maven("https://jitpack.io")
+        maven("https://maven.aliyun.com/repository/public")
+        maven("https://maven.bilibili.com/repository/public")
     }
 }
-
-rootProject.name = "VCAMSX"
+rootProject.name = "VirtuCam3"
 include(":app")
