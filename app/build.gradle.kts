@@ -1,15 +1,16 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services") // Firebase
 }
 
 android {
-    namespace = "com.wangyiheng.VirtuCam"
+    namespace = "com.example.myapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.wangyiheng.VirtuCam"
-        minSdk = 24
+        applicationId = "com.example.myapp"
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -18,12 +19,15 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            isDebuggable = true
         }
     }
 
@@ -38,30 +42,41 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
-dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+repositories {
+    google()
+    mavenCentral()
+    maven("https://jitpack.io")
+    maven("https://maven.aliyun.com/repository/public")
+    maven("https://maven.bilibili.com/repository/public") // ijkplayer source
+}
 
-    // مكتبات IJKPlayer (مشغل الفيديو)
+dependencies {
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+
+    // IJKPlayer (video player)
     implementation("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
     implementation("tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8")
     implementation("tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8")
 
-    // Xposed API (من مستودع api.xposed.info)
-    implementation("de.robv.android.xposed:api:82")
+    // Firebase Analytics
+    implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
 
-    // مكتبة Koin لإدارة الاعتماديات
-    implementation("io.insert-koin:koin-android:3.4.3")
+    // Lifecycle & ViewModel
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
 
-    // Firebase (اختياري)
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 
+    // Testing
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
