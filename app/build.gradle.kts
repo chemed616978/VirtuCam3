@@ -1,16 +1,17 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
+    // تم تعطيل Firebase مؤقتًا
+    // id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.myapp"
+    namespace = "com.example.vcamsx"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapp"
-        minSdk = 21
+        applicationId = "com.example.vcamsx"
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -26,9 +27,11 @@ android {
                 "proguard-rules.pro"
             )
         }
-        debug {
-            isDebuggable = true
-        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 
     compileOptions {
@@ -39,36 +42,29 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
 
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
+repositories {
+    google()
+    mavenCentral()
+    maven("https://api.xposed.info/")
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // IJKPlayer
-    implementation("tv.danmaku.ijk.media:ijkplayer-java:0.8.8")
-    implementation("tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8")
-    implementation("tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8")
+    // بدائل مكتبة ijkplayer من JitPack (لتفادي الخطأ السابق)
+    implementation("com.github.Bilibili:ijkplayer-java:0.8.8")
+    implementation("com.github.Bilibili:ijkplayer-armv7a:0.8.8")
+    implementation("com.github.Bilibili:ijkplayer-arm64:0.8.8")
 
-    // Firebase Analytics
-    implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
+    // Firebase تم تعطيله مؤقتًا
+    // implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
 
-    // Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
-
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
-
-    // Tests
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
