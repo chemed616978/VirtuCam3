@@ -1,8 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    // تم تعطيل Firebase مؤقتًا
-    // id("com.google.gms.google-services")
 }
 
 android {
@@ -27,6 +25,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isMinifyEnabled = false
+        }
     }
 
     buildFeatures {
@@ -47,23 +48,26 @@ android {
 repositories {
     google()
     mavenCentral()
-    maven("https://api.xposed.info/")
 }
 
 dependencies {
+    // الأساسيات
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
-    // بدائل مكتبة ijkplayer من JitPack (لتفادي الخطأ السابق)
-    implementation("com.github.Bilibili:ijkplayer-java:0.8.8")
-    implementation("com.github.Bilibili:ijkplayer-armv7a:0.8.8")
-    implementation("com.github.Bilibili:ijkplayer-arm64:0.8.8")
+    // ExoPlayer (بديل مستقر عن ijkplayer)
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-common:1.3.1")
 
-    // Firebase تم تعطيله مؤقتًا
-    // implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
+    // أدوات مساعدة
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 
+    // الاختبارات
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
